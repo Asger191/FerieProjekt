@@ -18,4 +18,28 @@ public class Week {
         this.weekNumber = weekNumber;
         this.week = new ArrayList<>();
     }
+
+    public int getWeekId() {
+        return weekId;
+    }
+
+    public void setWeekId(int weekId) {
+        this.weekId = weekId;
+    }
+
+    public int getWeekNumber() {
+        return weekNumber;
+    }
+
+    public void setWeekNumber(int weekNumber) {
+        this.weekNumber = weekNumber;
+    }
+
+    public List<Day> getWeek() {
+        return week;
+    }
+
+    public void setWeek(List<Day> week) {
+        this.week = week;
+    }
 }
