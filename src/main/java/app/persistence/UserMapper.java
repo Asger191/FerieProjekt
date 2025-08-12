@@ -3,6 +3,7 @@ package app.persistence;
 import app.entities.User;
 import app.exception.CustomException;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +23,8 @@ public class UserMapper {
         String sql = "INSERT INTO users (username,password) VALUES (?,?)";
 
         try (
-                ConnectionPool connection = connectionPool.getConnection(); // Henter forbindelse til db
-                PreparedStatement ps = connection.getConnection().prepareStatement(sql) //sikkerhed under indsættelse i db
+                Connection connection = connectionPool.getConnection(); // Henter forbindelse til db
+                PreparedStatement ps = connection.prepareStatement(sql) //sikkerhed under indsættelse i db
                 ) {
 
             ps.setString(1, user.getUsername());
@@ -42,8 +43,8 @@ public class UserMapper {
     public static User logIn(String username) throws CustomException{
         String sql = "SELECT * FROM users WHERE username = ?";
 
-        try (ConnectionPool connetion = connectionPool.getConnection();
-             PreparedStatement ps = connetion.getConnection().prepareStatement(sql)
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)
         ) {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -66,8 +67,8 @@ public class UserMapper {
     public static boolean userExist(User user) throws CustomException {
         String sql = "SELECT 1 FROM users WHERE username = ?";
 
-        try (ConnectionPool connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.getConnection().prepareStatement(sql);
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             ps.setString(1, user.getUsername());
             ResultSet rs = ps.executeQuery();
