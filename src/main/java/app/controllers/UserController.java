@@ -10,8 +10,9 @@ public class UserController {
 
     public static void addRoutes(Javalin app) {
         //Start- og loginside
-        app.get("startPage", ctx -> ctx.render("startPage.html"));
         app.post("index", ctx -> UserController.userLogin(ctx));
+        app.get("startPage", ctx -> ctx.render("startPage.html"));
+
 
         //Rute til oprettelse af konto
         app.post("/createAccount", ctx -> UserController.createUser(ctx));
@@ -61,9 +62,10 @@ public class UserController {
             User user = UserMapper.logIn(username);
             if(user != null){
                 ctx.sessionAttribute("currentUser", user);
+                ctx.redirect("/startPage");
             } else {
                 ctx.attribute("message", "Fejl i brugernavn eller password");
-                ctx.render("index.html");
+                ctx.render("index");
             }
 
         } catch (CustomException e){
