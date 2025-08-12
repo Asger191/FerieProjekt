@@ -11,12 +11,12 @@ public class Week {
     public Week(int weekId, int weekNumber, List<Day> week) {
         this.weekId = weekId;
         this.weekNumber = weekNumber;
-        this.week = new ArrayList<>();
+        this.week = week;
     }
 
     public Week(int weekNumber, List<Day> week) {
         this.weekNumber = weekNumber;
-        this.week = new ArrayList<>();
+        this.week = week;
     }
 
     public int getWeekId() {
