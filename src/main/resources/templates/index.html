@@ -15,19 +15,19 @@
 <h1 class="login">Login</h1>
 <div class="loginContainer">
 <div class="loginForm">
-    <form>
+    <form action="login" method="post">
         <div class="formText">
         <label for="username">Brugernavn</label>
-        <input type="text" id="username" placeholder="Brugernavn"/>
+        <input type="text" id="username" placeholder="Brugernavn" name="username"/>
 
         <label for="password">Adgangskode</label>
-        <input type="text" id="password" placeholder="Adgangskode"/>
+        <input type="text" id="password" placeholder="Adgangskode" name="password"/>
 
 
 
             <button class="logIndKnap" type="submit">Log Ind</button>
         </div>
-        <p class="opretKontoTekst">Har du ikke en bruger? <u>Opret bruger<u></p>
+        <p class="opretKontoTekst">Har du ikke en bruger? <a href="createAccount.html" th:href="@{createAccount}"><u>Opret bruger</u></a></p>
     </form>
 
 </div>

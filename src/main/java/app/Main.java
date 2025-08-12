@@ -1,11 +1,24 @@
-
+package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.controllers.UserController;
+import app.persistence.ConnectionPool;
+import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
-public static void main(String[] args)
+public class Main{
+
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "a20652691a";
+    private static final String URL = "jdbc:postgresql://207.154.238.209:5432/%s?currentSchema=public";
+    private static final String DB = "madkalenderen";
+
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
+
+
+    public static void main(String[] args)
 {
     // Initializing Javalin and Jetty webserver
 
@@ -15,7 +28,11 @@ public static void main(String[] args)
         config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
     }).start(7070);
 
-    // Routing
+    UserMapper.setConnectionPool(connectionPool);
 
-    app.get("/", ctx ->  ctx.render("index.html"));
+    // Routing
+    app.get("/", ctx -> ctx.redirect("/index"));
+    app.get("/index", ctx -> ctx.render("index.html"));
+    UserController.addRoutes(app);
+}
 }
