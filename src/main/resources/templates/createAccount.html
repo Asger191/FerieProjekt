@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<title>Newsletters</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+<head>
+    <div class="headContainer">
+        <h1 class="title">Mad Kalenderen</h1>
+    </div>
+</head>
+
+<body>
+
+<h1 class="login">Opret Konto</h1>
+<div class="loginContainer">
+    <div class="loginForm">
+        <form action="createAccount" method="post">
+            <div class="formText">
+                <label for="username">Brugernavn</label>
+                <input type="text" id="username" placeholder="Brugernavn" name="createUsername"/>
+
+                <label for="password">Adgangskode</label>
+                <input type="password" id="password" placeholder="Adgangskode" name="createPassword"/>
+
+
+
+                <button class="logIndKnap" type="submit">Opret</button>
+            </div>
+            <p class="opretKontoTekst">Har du allerede en bruger? <a th:href="@{index}"><u>Log ind</u></a></p>
+        </form>
+        <p th:text="${message}"></p>
+
+    </div>
+</div>
+</body>
+</html>

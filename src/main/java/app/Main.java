@@ -1,7 +1,12 @@
-
+package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+
+import app.controllers.UserController;
+import app.persistence.UserMapper;
+
+
 import app.controllers.WeekController;
 import app.persistence.ConnectionPool;
 import app.persistence.WeekMapper;
@@ -26,11 +31,18 @@ public static void main(String[] args) {
         config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
     }).start(7070);
 
+    UserMapper.setConnectionPool(connectionPool);
+
+    // Routing
+    app.get("/", ctx -> ctx.redirect("/index"));
+    app.get("/index", ctx -> ctx.render("index.html"));
+    UserController.addRoutes(app);
+
     WeekMapper.setConnectionPool(connectionPool);
 
     // Routing
 
-    app.get("/", ctx ->  ctx.render("index.html"));
+    
 
     app.post("/addWeek", ctx -> ctx.render("addWeek.html"));
 
@@ -43,6 +55,7 @@ public static void main(String[] args) {
         WeekController controller = new WeekController();
         controller.addWeekToCalender(ctx);
     });
+
 
 
 }
