@@ -83,3 +83,29 @@ input{
     margin-left: 3vw;
 
 }
+
+.user-info {
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.addWeekContainer {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addWeek {
+    font-size: 2.2rem;
+    text-align: center;
+    border: solid 2px black;
+    border-radius: 10px;
+}
+
+.addWeek:hover {
+    font-size: 2.3rem;
+    border: solid 3px black;
+}

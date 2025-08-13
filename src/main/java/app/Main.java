@@ -2,8 +2,10 @@
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.controllers.UserController;
 import app.controllers.WeekController;
 import app.persistence.ConnectionPool;
+import app.persistence.UserMapper;
 import app.persistence.WeekMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -27,10 +29,13 @@ public static void main(String[] args) {
     }).start(7070);
 
     WeekMapper.setConnectionPool(connectionPool);
+    UserMapper.setConnectionPool(connectionPool);
 
     // Routing
 
     app.get("/", ctx ->  ctx.render("index.html"));
+    app.get("/index", ctx -> ctx.render("index.html"));
+    UserController.addRoutes(app);
 
     app.post("/addWeek", ctx -> ctx.render("addWeek.html"));
 

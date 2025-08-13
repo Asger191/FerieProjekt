@@ -28,7 +28,7 @@ public class WeekController {
         }
         Week week = new Week(weekNumber, days);
         WeekMapper weekMapper = new WeekMapper();
-        weekMapper.addWeekWithDays(week);
+        weekMapper.addWeekWithDays(ctx, week);
 
     }
 }

@@ -2,11 +2,13 @@ package app.persistence;
 
 import app.entities.User;
 import app.exception.CustomException;
+import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserMapper {
 
@@ -78,4 +80,27 @@ public class UserMapper {
 
         }
     }
+
+    public User getUserByUserID(int userID) throws DatabaseException {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+
+        try(Connection connection = connectionPool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)){
+
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+
+                return new User(userID, username, password);
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            throw new DatabaseException("Fejl ved login: ",e.getMessage());
+        }
+        }
+
 }

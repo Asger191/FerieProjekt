@@ -1,8 +1,10 @@
 package app.persistence;
 
 import app.entities.Day;
+import app.entities.User;
 import app.entities.Week;
 import app.exceptions.DatabaseException;
+import io.javalin.http.Context;
 
 import java.sql.*;
 
@@ -13,13 +15,14 @@ private static ConnectionPool connectionPool;
         WeekMapper.connectionPool = connectionPool;
     }
 
-    public static int addWeek(int weekNumber) throws DatabaseException{
-        String sql = "INSERT INTO week (week_number) VALUES(?) RETURNING week_id";
+    public static int addWeek(int weekNumber, int userID) throws DatabaseException{
+        String sql = "INSERT INTO week (week_number, user_id) VALUES(?, ?) RETURNING week_id";
 
         try(Connection connection = connectionPool.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)){
 
             ps.setInt(1, weekNumber);
+            ps.setInt(2, userID);
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()){
                     return rs.getInt("week_id");
@@ -53,12 +56,19 @@ private static ConnectionPool connectionPool;
         }
     }
 
-    public void addWeekWithDays(Week week) throws DatabaseException {
-        int weekId = addWeek(week.getWeekNumber()); // Opret uge, få week_id
+    public void addWeekWithDays(Context ctx, Week week) throws DatabaseException {
+        int userId = Integer.parseInt(ctx.formParam("user_id")); //Får userID fra index.html
+        int weekId = addWeek(week.getWeekNumber(), userId); // Opret uge, få week_id
         for (Day d : week.getWeek()) {
             addWeekInfo(d, weekId); // Tilføj hver dag
         }
     }
+
+
+
+
+
+
 
 
     public void editWeekPlan(){

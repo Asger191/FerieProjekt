@@ -17,6 +17,13 @@
     <div class="user-info" th:if="${session.currentUser != null}">
         <span th:text="${session.currentUser.username}"></span>
     </div>
+    <form action="/add-week" method="post">
+    <div class="addWeekContainer">
+    <a class="addWeek" th:href="@{/add-week}">Opret en uge i din madkalender</a>
 
+    </div>
+    </form>
 </body>
+
+
 </html>
